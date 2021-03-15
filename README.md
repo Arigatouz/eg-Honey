@@ -1,2 +1,1 @@
-# eg-Honey
-honey Project Shop
+# this is A project for eg-honey 
