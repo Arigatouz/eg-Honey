@@ -15,8 +15,7 @@ const carouselImageArray = [
 ];
 let counter = 0;
 
-//opening hamburger menu
-
+// opening hamburger menu
 hamburgerIcon.addEventListener("click", () => {
   navigation.classList.toggle("show");
   img.classList.toggle("rotate");
