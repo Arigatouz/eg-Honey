@@ -1,4 +1,14 @@
 @mixin respond($breakpoint) {
+  @if ($breakpoint == phone) {
+    @media screen and (min-width: 375px) {
+      @content;
+    }
+  }
+  @if ($breakpoint == bigPhone) {
+    @media screen and(min-width : 480px) {
+      @content;
+    }
+  }
   @if ($breakpoint == smallTab) {
     @media screen and (min-width: 700px) {
       @content;
@@ -9,8 +19,13 @@
       @content;
     }
   }
+  @if ($breakpoint == smallDeskTop) {
+    @media screen and (min-width: 1280px) {
+      @content;
+    }
+  }
   @if ($breakpoint == deskTop) {
-    @media screen and (min-width: 1400px) {
+    @media screen and (min-width: 1434px) {
       @content;
     }
   }
@@ -52,16 +67,34 @@ img {
 body {
   font-family: var(--MainFont);
 }
+.pageHolder {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2rem;
+}
 .Logo {
   margin: 1.5rem 0 2rem 3rem;
+
   & img {
     width: 100%;
     @include respond(tab) {
       width: 70rem;
     }
+    @include respond(smallDeskTop) {
+      margin-left: 5rem;
+      width: 50rem;
+    }
   }
   & h1 {
     color: var(--clr-yellow-dark);
+    @include respond(smallDeskTop) {
+      margin-left: 5rem;
+    }
   }
 }
 .navigation {
@@ -76,12 +109,19 @@ body {
     @include respond(tab) {
       top: 8rem;
     }
+    @include respond(smallDeskTop) {
+      display: none;
+    }
     & img {
       cursor: pointer;
       width: 3rem;
       transition: all 0.3s ease;
+      @include respond(smallDeskTop) {
+        display: none;
+      }
       @include respond(tab) {
         width: 5rem;
+        height: 3em;
       }
     }
   }
@@ -97,6 +137,10 @@ body {
     opacity: 0;
     transition: all 0.5s ease;
     z-index: 3;
+    @include respond(smallDeskTop) {
+      all: unset;
+      width: 70%;
+    }
   }
 
   &__list {
@@ -110,12 +154,24 @@ body {
     @include respond(smallTab) {
       margin-top: 10rem;
     }
+    @include respond(smallDeskTop) {
+      all: unset;
+      width: 100%;
+      display: flex;
+      background-color: var(--clr-yellow-button);
+      justify-content: center;
+
+      margin-top: 0rem;
+    }
   }
 
   &__item {
     margin: 1rem;
     @include respond(smallTab) {
       margin-top: 3rem;
+    }
+    @include respond(smallDeskTop) {
+      margin-top: 2rem;
     }
   }
 
@@ -137,6 +193,9 @@ body {
       );
       background-size: 220%;
       transition: all 0.4s;
+      @include respond(smallDeskTop) {
+        font-size: 2rem;
+      }
     }
 
     &:hover,
@@ -144,6 +203,20 @@ body {
       background-position: 100%;
       color: var(--clr-yellow-dark);
       transform: translateX(1rem);
+    }
+    &--last {
+      color: var(--clr-yellow) !important;
+      background-color: #000;
+      background-image: linear-gradient(
+        110deg,
+        transparent 0%,
+        transparent 51%,
+        rgb(255, 94, 0) 50%
+      ) !important;
+      &:hover {
+        color: #000 !important;
+        font-weight: 600;
+      }
     }
   }
 }
@@ -161,11 +234,10 @@ body {
 }
 
 .header {
-  @include respond(deskTop) {
+  @include respond(smallDeskTop) {
     display: flex;
   }
   &__image {
-    order: 2;
     margin-bottom: 2rem;
     height: 20rem;
     overflow: hidden;
@@ -175,21 +247,47 @@ body {
     @include respond(tab) {
       height: 50rem;
     }
+    @include respond(smallDeskTop) {
+      order: 1;
+      margin-bottom: 0rem;
+    }
   }
   &__info {
-    width: 32.7rem;
+    width: 30.7rem;
+    @include respond(phone) {
+      width: 32.7rem;
+    }
     margin: 0 1rem;
-    @include respond(smallTab) {
+    @include respond(bigPhone) {
       width: 100%;
+    }
+    @include respond(smallTab) {
       padding: 5rem 7rem;
     }
-
+    @include respond(smallDeskTop) {
+      order: 2;
+      padding: 1rem 0rem;
+      margin-top: 2rem;
+    }
     & h1 {
       font-weight: 600;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       font-size: 3rem;
+      & span {
+        color: var(--clr-yellow-button);
+        transition: all 0.2s ease;
+      }
       @include respond(smallTab) {
         font-size: 3.5rem;
+      }
+      @include respond(smallDeskTop) {
+        font-size: 5rem;
+        & span {
+          &:hover {
+            backface-visibility: hidden;
+            font-size: 6.2rem;
+          }
+        }
       }
     }
     & p {
@@ -199,6 +297,10 @@ body {
         font-size: 1.8rem;
         opacity: 0.5;
       }
+      @include respond(smallDeskTop) {
+        font-size: 2.3rem;
+        opacity: 0.7;
+      }
     }
     & button {
       font-size: 1.8rem;
@@ -207,11 +309,14 @@ body {
       border: none;
       background-color: var(--clr-yellow-button);
       cursor: pointer;
-      margin-bottom: 1rem;
+      margin: 1rem 0;
       transition: all 0.2s ease-out;
       opacity: 0.8;
       border: 1px solid #000;
       border-radius: 0.5rem;
+      @include respond(smallDeskTop) {
+        font-size: 2.5rem;
+      }
       &:hover {
         opacity: 1;
         box-shadow: 0.2rem 0.5rem 0.7rem rgba(0, 0, 0, 0.5);
@@ -228,12 +333,25 @@ body {
   &__icon {
   }
   &__container {
+    @include respond(smallDeskTop) {
+      display: flex;
+      justify-content: space-between;
+      height: 41rem;
+    }
   }
   &__image {
-    height: 24rem;
+    height: 21.3rem;
+
+    @include respond(phone) {
+      height: 24rem;
+    }
     overflow-y: hidden;
     @include respond(smallTab) {
-      height: 50rem;
+      height: 49rem;
+    }
+    @include respond(smallDeskTop) {
+      height: 100%;
+      order: 2;
     }
   }
   &__content {
@@ -243,21 +361,45 @@ body {
       padding: 5rem 7rem;
       margin-top: -3rem;
     }
+    @include respond(smallDeskTop) {
+      order: 1;
+      padding: 4rem 7rem;
+    }
 
     & h2 {
       text-transform: capitalize;
       margin-top: 2rem;
       color: var(--clr-white);
-      font-size: 3.2rem;
+      font-size: 2.5rem;
       font-weight: 400;
       margin-bottom: 2rem;
+      text-align: center;
+      @include respond(phone) {
+        font-size: 3.2rem;
+        text-align: left;
+      }
+
       @include respond(smallTab) {
-        font-size: 3.5rem;
+        font-size: 3.6rem;
         margin-bottom: 5rem;
       }
       & span {
         color: var(--clr-yellow);
         font-size: 7rem;
+        // @include respond(smallDeskTop) {
+        //   &:hover {
+        //     background-image: linear-gradient(
+        //       70deg,
+        //       #ff0000,
+        //       #ffa500,
+        //       #ffff00,
+        //       #008000
+        //     );
+        //     color: transparent;
+        //     background-clip: text;
+
+        //   }
+        // }
       }
     }
     & p {
@@ -268,6 +410,15 @@ body {
       @include respond(smallTab) {
         font-size: 1.8rem;
         opacity: 0.5;
+      }
+      @include respond(smallDeskTop) {
+        &:hover {
+          opacity: 0.7;
+          & sup {
+            opacity: 1;
+            color: var(--clr-yellow);
+          }
+        }
       }
       & sup {
         color: var(--clr-yellow);
@@ -305,15 +456,16 @@ body {
           height: 5px;
           border-bottom: 2px solid var(--clr-yellow);
           transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-
           @include respond(smallTab) {
             left: -80px;
           }
         }
         &:hover {
-          color: var(--clr-yellow);
           &::after {
-            transform: translateX(100%);
+            transform: translateX(20%);
+            @include respond(smallTab) {
+              transform: translateX(100%);
+            }
           }
         }
 
@@ -327,10 +479,19 @@ body {
 
 .ourapproach {
   background-color: var(--clr-yellow-button);
-  padding: 8rem 2rem 8rem;
+  padding: 8rem 2rem;
+  @include respond(smallDeskTop) {
+    padding: 0rem 2rem 5rem 5rem;
+  }
   &__container {
     @include respond(smallTab) {
       padding: 0 5rem;
+    }
+    @include respond(smallDeskTop) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0;
     }
   }
 
@@ -342,6 +503,12 @@ body {
       font-weight: 400;
       @include respond(smallTab) {
         font-size: 3.7rem;
+      }
+      @include respond(smallDeskTop) {
+        font-size: 6rem;
+        font-weight: 100;
+        color: #000;
+        width: 100%;
       }
     }
   }
@@ -391,16 +558,23 @@ body {
   &__container {
     @include respond(tab) {
       display: flex;
-      flex-grow: 1;
+      justify-content: space-between;
     }
   }
 
   &__image {
+    @include respond(tab) {
+      width: 100%;
+    }
     & picture {
       & img {
         height: 40rem;
         @include respond(tab) {
-          width: 57rem;
+          width: 100%;
+        }
+        @include respond(smallDeskTop) {
+          width: 100%;
+          height: 70rem;
         }
       }
     }
@@ -411,8 +585,36 @@ body {
     background-color: var(--clr-bg-black);
     @include respond(tab) {
       padding-top: 10rem;
+      height: 40rem;
     }
+    @include respond(smallDeskTop) {
+      height: 70rem;
+      max-width: 40rem;
+    }
+    &__filler {
+      display: none;
+      @include respond(smallDeskTop) {
+        display: block;
+        background-color: var(--clr-yellow-button);
+        height: 40rem;
+        margin-top: 1rem;
+        padding: 2rem;
 
+        & h3 {
+          margin-top: 5rem;
+          text-align: left;
+          font-weight: 400;
+          font-size: 3.2rem;
+          text-transform: uppercase;
+          margin-bottom: 2rem;
+        }
+        & p {
+          color: var(--clr-textBlack);
+          font-size: 1.5rem;
+          line-height: 2;
+        }
+      }
+    }
     & h2 {
       color: var(--clr-white);
       font-weight: 400;
@@ -454,18 +656,55 @@ body {
   }
 }
 .footer {
-  width: 70%;
+  width: 60%;
   margin: 0 auto;
+  position: relative;
+  @include respond(tab) {
+    background-color: var(--clr-bg-black);
+  }
+  &__wave {
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+    width: 300rem;
+    @include respond(smallTab) {
+      width: 350rem;
+    }
+    @include respond(tab) {
+      width: 180rem;
+      z-index: 1;
+    }
+    @include respond(smallDeskTop){
+      width: 200rem;
+      transform: rotate(361deg);
+      overflow: hidden !important;
+    }
+  }
+  @include respond(tab) {
+    width: 100%;
+  }
   &__container {
-    width: 80%;
+    width: 106%;
     margin: 0 auto;
+    @include respond(phone) {
+      width: 93%;
+    }
+    @include respond(bigPhone) {
+      width: 75%;
+    }
     @include respond(smallTab) {
       width: 70%;
       text-align: center;
     }
+    @include respond(tab) {
+      width: 100%;
+      margin: 0;
+    }
   }
 
   &__brand {
+    z-index: 2;
+
     margin: 3rem 0 1rem 5rem;
     & img {
       width: 50rem;
@@ -473,7 +712,113 @@ body {
         margin: 0 0 3rem 8rem;
       }
       @include respond(tab) {
-        margin: 0 0 3rem 13rem;
+        margin: 0 0 3rem -8rem;
+      }
+    }
+  }
+  & .nav-container {
+    display: block;
+    @include respond(tab) {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+  }
+  &__social {
+    z-index: 2;
+    @include respond(tab) {
+      width: 50%;
+      margin: 0;
+    }
+    @include respond(smallDeskTop) {
+      width: 70%;
+    }
+    &__list {
+      list-style-type: none;
+      display: flex;
+    }
+    &__item {
+      margin-top: 1rem;
+    }
+    &__link {
+      font-size: 3rem;
+      text-decoration: none;
+      @include respond(smallTab) {
+        margin-left: 4rem;
+      }
+      @include respond(tab) {
+        font-size: 4rem;
+        margin-left: 1rem;
+        color: var(--clr-textBlack);
+      }
+      @include respond(smallDeskTop) {
+        color: #000;
+        margin-left: 2rem;
+        text-decoration: none;
+      }
+      @include respond(deskTop) {
+        text-decoration: none;
+      }
+      transition: all 0.3s ease-out;
+      display: block;
+      &--twitter,
+      &--facebook,
+      &--youtube,
+      &--linkedIn {
+        @include respond(smallTab) {
+          margin-right: 0rem;
+        }
+        margin-right: 2rem;
+        transition: all 0.3s ease-out;
+        &::after {
+          @include respond(tab) {
+            content: "Twitter";
+            font-size: 2rem;
+            visibility: hidden;
+            opacity: 0;
+          }
+          transition: all 0.3s ease-out;
+        }
+        &:hover {
+          color: #00acee;
+
+          &::after {
+            visibility: visible;
+            opacity: 1;
+            margin-right: 3rem;
+          }
+        }
+      }
+
+      &--facebook {
+        &:hover {
+          color: #4267b2;
+        }
+        @include respond(tab) {
+          &::after {
+            content: "Facebook";
+          }
+        }
+      }
+      &--youtube {
+        &:hover {
+          color: #ff0000;
+        }
+        @include respond(tab) {
+          &::after {
+            content: "youTube";
+          }
+        }
+      }
+      &--linkedIn {
+        &:hover {
+          color: #0e76a8;
+        }
+        @include respond(tab) {
+          &::after {
+            content: "LinkedIn";
+          }
+        }
       }
     }
   }
@@ -481,6 +826,12 @@ body {
 .footerNavigation {
   width: 80%;
   margin: 0 auto;
+  z-index: 2;
+
+  @include respond(tab) {
+    width: 50%;
+    margin: 0;
+  }
   &__list {
     list-style-type: none;
   }
