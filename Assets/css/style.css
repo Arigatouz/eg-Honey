@@ -285,6 +285,12 @@ body {
   }
 }
 
+@media screen and (min-width: 1434px) {
+  .header__image {
+    width: 60%;
+  }
+}
+
 .header__info {
   width: 30.7rem;
   margin: 0 1rem;
@@ -314,7 +320,14 @@ body {
         -ms-flex-order: 2;
             order: 2;
     padding: 1rem 0rem;
+    width: 40rem;
     margin-top: 2rem;
+  }
+}
+
+@media screen and (min-width: 1434px) {
+  .header__info {
+    width: 40%;
   }
 }
 

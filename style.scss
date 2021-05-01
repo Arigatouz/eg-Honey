@@ -251,6 +251,9 @@ body {
       order: 1;
       margin-bottom: 0rem;
     }
+    @include respond(deskTop){
+      width: 60%;
+    }
   }
   &__info {
     width: 30.7rem;
@@ -267,7 +270,11 @@ body {
     @include respond(smallDeskTop) {
       order: 2;
       padding: 1rem 0rem;
+      width: 40rem;
       margin-top: 2rem;
+    }
+    @include  respond(deskTop){
+      width: 40%;
     }
     & h1 {
       font-weight: 600;
